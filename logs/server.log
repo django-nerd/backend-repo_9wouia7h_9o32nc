@@ -1,19 +1,19 @@
 INFO:     Will watch for changes in these directories: ['/home/workspace']
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [176] using StatReload
-INFO:     Started server process [178]
+INFO:     Started reloader process [219] using StatReload
+INFO:     Started server process [221]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     172.20.0.1:37998 - "HEAD / HTTP/1.1" 405 Method Not Allowed
-INFO:     172.20.0.1:38000 - "GET /api/cmc/global?convert=USD HTTP/1.1" 503 Service Unavailable
-INFO:     172.20.0.1:38010 - "GET /api/cmc/listings?limit=200&convert=USD HTTP/1.1" 503 Service Unavailable
-INFO:     172.20.0.1:38000 - "GET /api/cmc/global?convert=USD HTTP/1.1" 503 Service Unavailable
-INFO:     172.20.0.1:38010 - "GET /api/cmc/listings?limit=200&convert=USD HTTP/1.1" 503 Service Unavailable
-INFO:     172.20.0.1:38010 - "GET /api/cmc/listings?limit=200&convert=USD HTTP/1.1" 503 Service Unavailable
-INFO:     172.20.0.1:38010 - "GET /api/cmc/listings?limit=200&convert=USD HTTP/1.1" 503 Service Unavailable
-INFO:     172.20.0.1:38010 - "GET /api/cmc/global?convert=USD HTTP/1.1" 503 Service Unavailable
-INFO:     172.20.0.1:38000 - "GET /api/cmc/listings?limit=200&convert=USD HTTP/1.1" 503 Service Unavailable
-INFO:     172.20.0.1:38000 - "GET /api/cmc/listings?limit=200&convert=USD HTTP/1.1" 503 Service Unavailable
-INFO:     172.20.0.1:38010 - "GET /api/cmc/global?convert=USD HTTP/1.1" 503 Service Unavailable
-INFO:     172.20.0.1:38010 - "GET /api/cmc/listings?limit=200&convert=USD HTTP/1.1" 503 Service Unavailable
-INFO:     172.20.0.1:38010 - "GET /api/cmc/listings?limit=200&convert=USD HTTP/1.1" 503 Service Unavailable
+INFO:     172.20.0.1:56758 - "HEAD / HTTP/1.1" 405 Method Not Allowed
+INFO:     172.20.0.1:55806 - "GET /api/cmc/global?convert=USD HTTP/1.1" 503 Service Unavailable
+INFO:     172.20.0.1:55812 - "GET /api/cmc/listings?limit=200&convert=USD HTTP/1.1" 503 Service Unavailable
+INFO:     172.20.0.1:55806 - "GET /api/cmc/global?convert=USD HTTP/1.1" 503 Service Unavailable
+INFO:     172.20.0.1:55812 - "GET /api/cmc/listings?limit=200&convert=USD HTTP/1.1" 503 Service Unavailable
+INFO:     172.20.0.1:55812 - "GET /api/cmc/listings?limit=200&convert=USD HTTP/1.1" 503 Service Unavailable
+INFO:     172.20.0.1:55812 - "GET /api/cmc/listings?limit=200&convert=USD HTTP/1.1" 503 Service Unavailable
+INFO:     172.20.0.1:49310 - "GET /api/cmc/global?convert=USD HTTP/1.1" 503 Service Unavailable
+INFO:     172.20.0.1:49316 - "GET /api/cmc/listings?limit=200&convert=USD HTTP/1.1" 503 Service Unavailable
+INFO:     172.20.0.1:49310 - "GET /api/cmc/global?convert=USD HTTP/1.1" 503 Service Unavailable
+INFO:     172.20.0.1:49316 - "GET /api/cmc/listings?limit=200&convert=USD HTTP/1.1" 503 Service Unavailable
+INFO:     172.20.0.1:49316 - "GET /api/cmc/listings?limit=200&convert=USD HTTP/1.1" 503 Service Unavailable
+INFO:     172.20.0.1:49316 - "GET /api/cmc/listings?limit=200&convert=USD HTTP/1.1" 503 Service Unavailable
