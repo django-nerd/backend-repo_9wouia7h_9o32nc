@@ -1,5 +1,5 @@
 import os
-from typing import Optional
+from typing import Optional, List, Tuple
 import requests
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
@@ -16,6 +16,8 @@ app.add_middleware(
 
 CMC_API_BASE = "https://pro-api.coinmarketcap.com"
 CMC_API_KEY = os.getenv("CMC_API_KEY")
+
+COINGECKO_API_BASE = "https://api.coingecko.com/api/v3"
 
 
 def require_api_key():
@@ -100,6 +102,56 @@ def cmc_quotes(symbols: str = Query(..., description="Comma separated symbols e.
             raise HTTPException(status_code=r.status_code, detail=r.text)
         data = r.json().get("data", {})
         return {"data": data}
+    except requests.RequestException as e:
+        raise HTTPException(status_code=502, detail=str(e))
+
+
+# -----------------------------
+# Historical prices endpoint (CoinGecko proxy)
+# -----------------------------
+
+@app.get("/api/history")
+def historical_prices(
+    symbol: str = Query(..., description="Ticker symbol, e.g., BTC"),
+    convert: str = Query("USD", description="Fiat currency, e.g., USD, EUR"),
+    days: str = Query("7", description="Number of days (e.g., 1, 7, 14, 30, 90, 180, 365, max)"),
+    interval: Optional[str] = Query(None, description="Data interval: minutely, hourly, daily")
+):
+    """
+    Returns historical price series as [timestamp, price] pairs using CoinGecko's market_chart.
+    We map the provided symbol (e.g., BTC) to a CoinGecko coin id via their search API.
+    """
+    try:
+        # 1) Resolve symbol -> CoinGecko id using search
+        search_url = f"{COINGECKO_API_BASE}/search"
+        s = requests.get(search_url, params={"query": symbol}, timeout=15)
+        if s.status_code != 200:
+            raise HTTPException(status_code=s.status_code, detail=s.text)
+        matches = s.json().get("coins", [])
+        coin_id = None
+        sym_lower = symbol.lower()
+        # Prefer exact symbol match, else first result
+        for item in matches:
+            if item.get("symbol", "").lower() == sym_lower:
+                coin_id = item.get("id")
+                break
+        if not coin_id and matches:
+            coin_id = matches[0].get("id")
+        if not coin_id:
+            raise HTTPException(status_code=404, detail=f"Symbol '{symbol}' not found on CoinGecko")
+
+        # 2) Fetch market chart
+        vs = convert.lower()
+        chart_url = f"{COINGECKO_API_BASE}/coins/{coin_id}/market_chart"
+        params = {"vs_currency": vs, "days": days}
+        if interval:
+            params["interval"] = interval
+        r = requests.get(chart_url, params=params, timeout=20)
+        if r.status_code != 200:
+            raise HTTPException(status_code=r.status_code, detail=r.text)
+        prices: List[List[float]] = r.json().get("prices", [])
+        # prices is [[timestamp_ms, price], ...]
+        return {"symbol": symbol.upper(), "convert": convert.upper(), "points": prices}
     except requests.RequestException as e:
         raise HTTPException(status_code=502, detail=str(e))
 
